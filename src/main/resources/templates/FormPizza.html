@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <th:block th:replace="fragments :: risorse-head"></th:block>
+    <title>Pizza shop</title>  
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+  <body >
+    <div th:replace="fragments :: navbar('current')"></div>
+    <div class="container-fluid" >
+        <h3>Inserisci una nuova pizza</h3>
+    	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+     
+     		<form id="pizza-form" th:object="${pizza}" th:action="@{/add}" method="Post">
+            <div class="my-3">
+                <label for="name" class="form-label">Nome Pizza</label>
+                <input type="text" class="form-control" id="name" required th:field="*{name}">
+            </div>
+            
+            <div class="mb-3">
+                <label for="desc">Quali sono gli ingredienti della pizza?</label>
+                <textarea class="form-control" placeholder="Descrizione della tua pizza" id="description" th:field="*{description}"></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-label" for="price">Prezzo</label>
+                <input type="text" class="form-control" id="price" th:field="*{price}">
+            </div>
+            
+            <button type="submit" class="btn btn-danger my-3">Submit</button>
+       	    </form>
+    		</div>
+		</body>
+</html>
