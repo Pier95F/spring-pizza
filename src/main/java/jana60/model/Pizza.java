@@ -19,6 +19,7 @@ public class Pizza {
 	private String name;
 	private String description;
 	private Double price;
+	
 	public Integer getId() {
 		return id;
 	}
