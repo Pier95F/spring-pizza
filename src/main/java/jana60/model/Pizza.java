@@ -1,16 +1,19 @@
 package jana60.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.Range;
 
 @Entity
 @Table(name = "pizza")
@@ -30,6 +33,19 @@ public class Pizza {
 	@Min (value = 2)
 	private Double price;
 	
+	@ManyToMany
+	@JoinTable(name = "pizza_ingredients",
+			   joinColumns = @JoinColumn(name = "pizza_id"),
+			   inverseJoinColumns = @JoinColumn (name = "ingredients_id"))
+	private List<Ingredienti> ingredients;
+	
+	
+	public List<Ingredienti> getIngredients() {
+		return ingredients;
+	}
+	public void setIngredients(List<Ingredienti> ingredients) {
+		this.ingredients = ingredients;
+	}
 	public Integer getId() {
 		return id;
 	}

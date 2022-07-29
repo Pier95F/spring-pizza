@@ -22,7 +22,9 @@
                         <li class="nav-item active">
                             <a class="nav-link text-secondary" th:classAppend= "${page == ''} ? active : not-active" href="/">Home</a>
                         </li>
-                    
+                     <li class="nav-item">
+              		<a class="nav-link" th:classAppend="${page == ''} ? active : not-as" href="/Ingredienti">Ingredienti</a>
+            </li>
                     </ul>
                 </div>
             </nav>
