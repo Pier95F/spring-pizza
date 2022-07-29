@@ -2,10 +2,14 @@ package jana60.controller;
 
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,9 +40,24 @@ public class PizzaController {
 	    }
 	 
 	    @PostMapping("/add")
-	    public String SavePizza(@ModelAttribute("pizza") jana60.model.Pizza addPizza) {
+	    public String SavePizza(@Valid @ModelAttribute("pizza") jana60.model.Pizza addPizza, BindingResult br) {
+	    		Boolean brError = br.hasErrors();
+	    		Boolean checkName = true;
+	    		if (addPizza.getId() != null) {
+	    			jana60.model.Pizza vecchia = repo.findById(addPizza.getId()).get();
+	    			if(vecchia.getName().equalsIgnoreCase(addPizza.getName()))
+	    				checkName = false;
+	    		}
+	    		if (checkName && repo.countByName(addPizza.getName()) > 0)
+	    		{ br.addError(new FieldError("pizza", "name", "Hai già una pizza con questo nome"));
+	    		brError = true;
+	    		}
+	    		if (brError)
+	    			return "/formPizza";
+	    		else {
 	            repo.save(addPizza);
 	            return "redirect:/";	
+	    }
 	    }
 	    
 	    @GetMapping("/delete/{id}")
